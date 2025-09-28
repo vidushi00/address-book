@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "address-book/address-book";
+
+message AddAddressRequest {
+    string name = 1;
+    string email = 2;
+    string phone = 3;
+    string address = 4;
+}
+
+message AddAddressResponse {
+    string message = 1;
+}
+
+message GetAddressRequest {
+    string name = 1;
+}
+
+message GetAddressResponse {
+    string name = 1;
+    string email = 2;
+    string phone = 3;
+    string address = 4;
+}
+
+service AddAddressBook {
+    rpc AddAddress(AddAddressRequest) returns (AddAddressResponse);
+}
+
+service GetAddressBook {
+    rpc GetAddress(GetAddressRequest) returns (GetAddressResponse);
+}
