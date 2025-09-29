@@ -5,6 +5,6 @@
 ## To Setup the repo:
 - Clone the repo using ```git clone```
 - Make sure you have go and protobuf installed already
-- Run go mod tidy
-- Run go mod vendor. This will generate go.sum file with all the necessary dependencies
+- Run ```go mod tidy```
+- Run ```go mod vendor```. This will generate go.sum file with all the necessary dependencies
 - Now, the add adress API is ready to be executed
