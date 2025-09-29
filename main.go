@@ -2,21 +2,14 @@ package main
 
 import (
 	address_book "address-book/address-book"
-	"context"
+	"address-book/config"
+	"address-book/repository"
+	"address-book/service"
 	"log"
 	"net"
 
 	"google.golang.org/grpc"
 )
-
-type newAddressBook struct {
-	address_book.UnimplementedAddAddressBookServer
-}
-
-func (s *newAddressBook) AddAddress(ctx context.Context, req *address_book.AddAddressRequest) (*address_book.AddAddressResponse, error) {
-	log.Printf("Added address successfully: %v", req)
-	return &address_book.AddAddressResponse{Message: "Address added"}, nil
-}
 
 func main() {
 	log.Println("Starting server on port 8080")
@@ -28,8 +21,13 @@ func main() {
 
 	log.Println("Started server: port 8080")
 
+	mongoDbClient := config.SetUpMongo()
+
+	// Set collections in the repository
+	repository.SetCollections(mongoDbClient)
+
 	server := grpc.NewServer()
-	service := &newAddressBook{}
+	service := &service.NewAddressBook{}
 
 	address_book.RegisterAddAddressBookServer(server, service)
 	err = server.Serve(lis)
